@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<HTML>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        width: 100%;
+        min-height: 100vh;
+        background-color: #eee;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4rem 0 0 0;
+    }
+    
+    form {
+        width: 500px;
+        background-color: #ffffff;
+        padding: 1rem 2rem;
+        box-shadow: 0px 0px 10px #000;
+        border-radius: 10px;
+    }
+    
+    .form-control {
+        display: flex;
+        flex-direction: column;
+        margin: 1.5rem 0;
+    }
+    
+    input {
+        padding: 10px 0;
+        width: 100%;
+        font-size: 18px;
+        letter-spacing: 1px;
+        border: 0;
+        border-bottom: 2px solid rgb(241, 43, 43);
+        background-color: transparent;
+        outline: none;
+    }
+    
+    .form-control label {
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        padding-bottom: 7px;
+    }
+    
+    .submit {
+        width: 60px;
+        height: 30px;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        box-shadow: 0 0 5px #000;
+        background-color: #fff;
+        font-size: 25px;
+        cursor: pointer;
+        display: block;
+        margin-left: auto;
+    }
+    
+    .submit:hover {
+        background-color: #fff;
+        box-shadow: 0 0 10px rgb(112, 3, 255);
+        transition: all 0.5s;
+        border: 2px solid rgb(255, 255, 0);
+    }
+    
+    .notes {
+        width: 100%;
+        display: flex;
+        padding: 3rem 2rem 2rem 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .card {
+        background: #fff;
+        padding: 1rem 1.5rem 1rem;
+        width: 32rem;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+        border-radius: 5px;
+        margin: 1rem 2rem;
+    }
+    
+    .card h3 {
+        font-size: 1.9rem;
+        padding-bottom: 7px;
+        position: relative;
+        display: inline;
+    }
+    
+    .card p {
+        letter-spacing: 0.5px;
+        padding: 1rem 0;
+    }
+    
+    .card h3::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 2px;
+        bottom: 4px;
+        left: 0;
+        background: rgb(206, 127, 23);
+    }
+    
+    .del {
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        background: rgb(247, 237, 219);
+        /* color: rgb(66, 65, 65); */
+    }
+</style>
+
+<BODY>
+    <div class="container">
+        <form>
+            <div class="form-control">
+                <label>Title</label>
+                <input type="text" id="text" placeholder="Enter  Title" autocomplete="off" name="title">
+            </div>
+            <div class="form-control">
+                <label>Description</label><input type="text" id="desc" placeholder="Enter  Notes" autocomplete="off" name="desc">
+            </div>
+            <button class="submit"><i class="fas fa-plus"></i></button>
+        </form>
+    </div>
+    <div class="notes">
+    </div>
+
+
+    <script>
+        let submit = document.querySelector(".submit");
+        let notesElem = document.querySelector('.notes');
+        let title = document.querySelector("#text");
+        let desc = document.querySelector('#desc');
+        let notes = JSON.parse(localStorage.getItem("notes"));
+        if (notes) {
+            notes.forEach(element => {
+                addNotes(element)
+            });
+        }
+        submit.addEventListener("click", (e) => {
+            e.preventDefault();
+            addNotes()
+        })
+
+        function addNotes(obj) {
+            let card = document.createElement("div");
+            card.classList.add("card");
+            let titleval = title.value;
+            let descVal = desc.value;
+            if (obj) {
+                titleval = obj.title;
+                descVal = obj.desc;
+            }
+            if (titleval) {
+                card.innerHTML = `<h3>${titleval}</h3>
+                                    <p class="ptag">${descVal}</p>
+                             <button class="del"><i class='far fa-trash-alt'></i></button>`;
+                notesElem.appendChild(card);
+                updateLs()
+            }
+            let del = card.querySelector(".del");
+            del.addEventListener('click', () => {
+                card.remove();
+                updateLs();
+            })
+        }
+
+        function updateLs() {
+            let card = document.querySelectorAll(".card");
+            let arr = [];
+            card.forEach(element => {
+                arr.push({
+                    title: element.children[0].innerText,
+                    desc: element.children[1].innerText
+                })
+            });
+            localStorage.setItem("notes", JSON.stringify(arr));
+        }
+    </script>
+
+</BODY>
+
+</HTML>
