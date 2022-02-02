@@ -1,0 +1,82 @@
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!------ Include the above in your HEAD tag ---------->
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins');
+    body {
+        background: #e8e7e7;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .box {
+        padding: 60px 0px;
+        margin-top: 50px;
+        background: #FFF;
+        text-align: center;
+    }
+    
+    .box-title {
+        color: #428bca;
+    }
+    
+    img {
+        width: 100px;
+        margin-bottom: 15px;
+    }
+    
+    .fa {
+        padding: 15px;
+        font-size: 30px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3 col-12">
+            <div class="box">
+                <img class="profile" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?h=350&auto=compress&cs=tinysrgb" alt="" />
+
+                <div class="box-title">John Doe</div>
+
+                <div class="box-text" id="demo">
+                    <span>
+
+                    </span>
+                </div>
+
+                <!-- <div class="icons">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-github"></i></a>
+                    <a href="#"><i class="fa fa-tumblr"></i></a>
+                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <script src="./main.js"></script> -->
+<button onclick="logout()">logout</button>
+<script src="./main.js"></script>
+<script>
+    const userData = JSON.parse(localStorage.getItem("users"))
+    console.log(userData)
+    document.getElementById("demo").innerHTML = userData.email;
+
+    const checkUser = userData.find((value) => {
+        return value.email === email.value && value.password === password.value
+
+    })
+
+    console.log(checkUser);
+    if (checkUser) {
+        localStorage.setItem("currentUser", JSON.stringify(checkUser))
+        alert("login")
+            // console.log()
+    } else {
+        alert("invalid")
+    }
+</script>
